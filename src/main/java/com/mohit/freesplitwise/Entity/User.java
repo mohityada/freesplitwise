@@ -9,68 +9,70 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity //for ORM
+@Table(name = "\"user\"", schema = "freesplitwise")
 public class User {
     @Id // PK of table
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     
     @NotBlank
-    private String Name;
+    private String name;
 
     @NotBlank
     @Email
-    private String Email;
+    private String email;
 
     @NotBlank
     @NumberFormat
-    private String Mobile;
+    private String mobile;
 
     //Relationship
-    @ManyToMany(mappedBy= "Users")
-    private List<Group> Groups;
+    @ManyToMany(mappedBy= "users")
+    private List<Group> groups;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getMobile() {
-        return Mobile;
+        return mobile;
     }
 
     public List<Group> getGroups() {
-        return Groups;
+        return groups;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public void setMobile(String mobile) {
-        Mobile = mobile;
+        this.mobile = mobile;
     }
 
     public void setGroups(List<Group> groups) {
-        Groups = groups;
+        this.groups = groups;
     } 
     
 }

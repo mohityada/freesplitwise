@@ -13,6 +13,6 @@ import com.mohit.freesplitwise.Entity.Expense;
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     // Optional<Expense> findById(Long Id); no need to define as this method is already present in the JpaRepo
-    @Query("SELECT e FROM Expense e WHERE e.Group.Id = :Id")
-    List<Expense> findByGroupId(@Param("Id") Long Id);
+    @Query("SELECT e FROM Expense e WHERE e.group.id = :id")
+    List<Expense> findByGroupId(@Param("id") Long id);
 }

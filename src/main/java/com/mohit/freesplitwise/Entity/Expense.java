@@ -4,88 +4,91 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
-
+@Entity
+@Table(name="expense_table")
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @NotBlank
-    private String Description;
+    private String description;
 
-    private Double TotalAmount;
-
-    @ManyToOne
-    private User PaidBy;
+    private Double totalAmount;
 
     @ManyToOne
-    private Group Group;
+    private User paidBy;
+
+    @ManyToOne
+    private Group group;
 
     @ElementCollection
-    private Map<Long, Double> SplitDetails; // User ID -> Amount
+    private Map<Long, Double> splitDetails; // User ID -> Amount
 
-    private LocalDate Date;
+    private LocalDate date;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public Double getTotalAmount() {
-        return TotalAmount;
+        return totalAmount;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public void setTotalAmount(Double totalAmount) {
-        TotalAmount = totalAmount;
+        this.totalAmount = totalAmount;
     }
 
     public void setPaidBy(User paidBy) {
-        PaidBy = paidBy;
+        this.paidBy = paidBy;
     }
 
     public void setGroup(Group group) {
-        Group = group;
+        this.group = group;
     }
 
     public void setSplitDetails(Map<Long, Double> splitDetails) {
-        SplitDetails = splitDetails;
+        this.splitDetails = splitDetails;
     }
 
     public void setDate(LocalDate date) {
-        Date = date;
+        this.date = date;
     }
 
     public User getPaidBy() {
-        return PaidBy;
+        return paidBy;
     }
 
     public Group getGroup() {
-        return Group;
+        return group;
     }
 
     public Map<Long, Double> getSplitDetails() {
-        return SplitDetails;
+        return splitDetails;
     }
 
     public LocalDate getDate() {
-        return Date;
+        return date;
     }
 
 }

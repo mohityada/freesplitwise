@@ -9,56 +9,58 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name="group_table")
 public class Group {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @NotBlank
-    private String Name;
+    private String name;
 
     @ManyToMany
     @JoinTable(
-        name = "GroupUsers",
+        name = "groupusers",
         joinColumns = @JoinColumn(name = "GroupId"),
         inverseJoinColumns = @JoinColumn(name = "UserId")
     )
-    private List<User> Users;
+    private List<User> users;
 
-    @OneToMany(mappedBy="Group")
-    private List<Expense> Expenses;
+    @OneToMany(mappedBy="group")
+    private List<Expense> expenses;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public void setUsers(List<User> users) {
-        Users = users;
+        this.users = users;
     }
 
     public void setExpenses(List<Expense> expenses) {
-        Expenses = expenses;
+        this.expenses = expenses;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public List<User> getUsers() {
-        return Users;
+        return users;
     }
 
     public List<Expense> getExpenses() {
-        return Expenses;
+        return expenses;
     }
 }

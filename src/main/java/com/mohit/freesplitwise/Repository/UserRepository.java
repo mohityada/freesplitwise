@@ -9,5 +9,5 @@ import com.mohit.freesplitwise.Entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-    Optional<User> findByEmail(String Email);
+    Optional<User> findByEmail(String email);
 }
