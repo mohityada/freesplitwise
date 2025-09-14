@@ -3,12 +3,15 @@ package com.mohit.freesplitwise.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mohit.freesplitwise.Entity.User;
-import com.mohit.freesplitwise.Repository.UserRepository;
+import com.mohit.freesplitwise.Service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @RestController
@@ -16,13 +19,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     
-    @PostMapping("/add")
-    public ResponseEntity createUser(@RequestBody User user) {
-        User savedUser = userRepository.save(user);
+    @GetMapping("/getuser")
+    public ResponseEntity<User> getUser(@RequestParam String email) {
+        System.out.println("hello user :::");
+        User savedUser = userService.getUser(email);
         return ResponseEntity.ok(savedUser);
     }
+    
     
     
 }
