@@ -1,9 +1,9 @@
 package com.mohit.freesplitwise.Service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mohit.freesplitwise.CustomException.UserNotFoundException;
 import com.mohit.freesplitwise.Entity.User;
 import com.mohit.freesplitwise.Repository.UserRepository;
 
@@ -17,9 +17,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUser(String email){
-        return userRepository.findByEmail(email).orElseThrow(() -> 
-        new UserNotFoundException("User doesn't exist with email: " + email));
+    public Optional<User> getUser(String email){
+        return userRepository.findByEmail(email);
     }
 
 

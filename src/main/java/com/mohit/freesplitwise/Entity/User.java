@@ -1,22 +1,16 @@
 package com.mohit.freesplitwise.Entity;
 
 import java.util.List;
-
-import org.springframework.format.annotation.NumberFormat;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
-@Entity //for ORM
-@Table(name = "\"user\"", schema = "freesplitwise")
+@Entity
+@Table(name = "users", schema = "freesplitwise")
 public class User {
-    @Id // PK of table
+
+    @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
@@ -28,51 +22,25 @@ public class User {
     private String email;
 
     @NotBlank
-    @NumberFormat
+    @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits")
     private String mobile;
 
-    //Relationship
-    @ManyToMany(mappedBy= "users")
+    @ManyToMany(mappedBy = "users")
     private List<Group> groups;
 
-    public Long getId() {
-        return id;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getMobile() {
-        return mobile;
-    }
+    public String getMobile() { return mobile; }
+    public void setMobile(String mobile) { this.mobile = mobile; }
 
-    public List<Group> getGroups() {
-        return groups;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
-    } 
-    
+    public List<Group> getGroups() { return groups; }
+    public void setGroups(List<Group> groups) { this.groups = groups; }
 }

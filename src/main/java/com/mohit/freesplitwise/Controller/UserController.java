@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mohit.freesplitwise.CustomException.UserNotFoundException;
 import com.mohit.freesplitwise.Entity.User;
 import com.mohit.freesplitwise.Service.UserService;
 
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -23,8 +23,7 @@ public class UserController {
     
     @GetMapping("/getuser")
     public ResponseEntity<User> getUser(@RequestParam String email) {
-        System.out.println("hello user :::");
-        User savedUser = userService.getUser(email);
+        User savedUser = userService.getUser(email).orElseThrow(() -> new UserNotFoundException("User not found!"));
         return ResponseEntity.ok(savedUser);
     }
     
