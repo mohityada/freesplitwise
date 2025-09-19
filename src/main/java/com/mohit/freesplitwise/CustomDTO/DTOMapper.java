@@ -25,15 +25,16 @@ public class DTOMapper {
             }).collect(Collectors.toList()));
 
         // map expenses
-        // dto.setExpenses(group.getExpenses().stream()
-        //     .map(expense -> {
-        //         ExpenseDTO e = new ExpenseDTO();
-        //         e.setId(expense.getId());
-        //         e.setDescription(expense.getDescription());
-        //         e.setAmount(expense.getTotalAmount());
-        //         return e;
-        //     }).collect(Collectors.toList()));
-
+        if(group.getExpenses() != null){
+            dto.setExpenses(group.getExpenses().stream()
+                .map(expense -> {
+                    ExpenseDTO e = new ExpenseDTO();
+                    e.setId(expense.getId());
+                    e.setDescription(expense.getDescription());
+                    e.setAmount(expense.getTotalAmount());
+                    return e;
+                }).collect(Collectors.toList()));
+        }
         return dto;
     }
 

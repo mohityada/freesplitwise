@@ -1,8 +1,6 @@
 package com.mohit.freesplitwise.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +26,14 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
-    public GroupDTO getGroup(Long id){
+    public GroupDTO getGroupDTO(Long id){
         Group group = groupRepository.findById(id).orElseThrow(() -> new GroupNotFoundException("Group not found!"));
         return DTOMapper.toGroupDTO(group);
+    }
+
+     public Group getGroup(Long id){
+        Group group = groupRepository.findById(id).orElseThrow(() -> new GroupNotFoundException("Group not found!"));
+        return group;
     }
 
     public GroupDTO removeUsersFromGroup(Long groupId, List<String> emails){
