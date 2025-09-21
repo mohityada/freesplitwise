@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mohit.freesplitwise.Configuration.JwtUtil;
-import com.mohit.freesplitwise.CustomException.UserNotFoundException;
 import com.mohit.freesplitwise.Entity.User;
 import com.mohit.freesplitwise.Service.UserService;
 
@@ -27,7 +26,7 @@ public class AuthenticationController {
 
     @PostMapping("/signin")
     public String signinUser(@RequestBody User newUser) {
-        Optional<User> user = userService.getUser(newUser.getEmail());
+        Optional<User> user = userService.getUserOptional(newUser.getEmail());
         
         if(!user.isPresent()){
             User savedUser = userService.addUser(newUser);
@@ -39,8 +38,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public String loginUser(@RequestBody User user) {
-        User savedUser = userService.getUser(user.getEmail()).
-            orElseThrow(() -> new UserNotFoundException("User not found!"));
+        User savedUser = userService.getUser(user.getEmail());
 
         return jwtUtil.generateToken(savedUser.getEmail());
     }

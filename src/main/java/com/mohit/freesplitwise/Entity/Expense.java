@@ -23,7 +23,7 @@ public class Expense {
     private User paidBy;
 
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
+    @JoinColumn(name = "group_id", nullable = true)
     private Group group;
 
     // UserID -> Amount mapping

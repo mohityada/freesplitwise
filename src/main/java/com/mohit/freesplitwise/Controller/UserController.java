@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mohit.freesplitwise.CustomDTO.DTOMapper;
 import com.mohit.freesplitwise.CustomDTO.UserDTO;
-import com.mohit.freesplitwise.CustomException.UserNotFoundException;
 import com.mohit.freesplitwise.Entity.User;
 import com.mohit.freesplitwise.Service.UserService;
 
@@ -25,7 +24,7 @@ public class UserController {
     
     @GetMapping("/getuser")
     public ResponseEntity<UserDTO> getUser(@RequestParam String email) {
-        User savedUser = userService.getUser(email).orElseThrow(() -> new UserNotFoundException("User not found!"));
+        User savedUser = userService.getUser(email);
         return ResponseEntity.ok(DTOMapper.toUserDTO(savedUser));
     }
     
