@@ -14,6 +14,9 @@ public class SecurityConfig{
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    @Autowired
+    private ApplicationConfiguration applicationConfiguration;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
@@ -22,10 +25,9 @@ public class SecurityConfig{
             .anyRequest()
             .authenticated()
             )
+            .authenticationProvider(applicationConfiguration.authenticationProvider())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            ;
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

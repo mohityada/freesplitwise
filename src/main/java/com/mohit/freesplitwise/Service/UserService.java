@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import com.mohit.freesplitwise.Configuration.ApplicationConfiguration;
 import com.mohit.freesplitwise.CustomException.UserNotFoundException;
 import com.mohit.freesplitwise.Entity.User;
 import com.mohit.freesplitwise.Repository.UserRepository;
@@ -16,6 +20,12 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ApplicationConfiguration applicationConfiguration;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     public User addUser(User user){
         return userRepository.save(user);
@@ -43,6 +53,32 @@ public class UserService {
         }
         
         return users;
+    }
+
+    public User signup(User newUser){
+        Optional<User> user = getUserOptional(newUser.getEmail());
+        
+        if(user.isPresent()){
+            throw new IllegalArgumentException("User already exists");
+        }
+        String hashedPassword =  applicationConfiguration.passwordEncoder().encode(newUser.getPassword());
+        newUser.setPassword(hashedPassword);
+        User savedUser = addUser(newUser);
+
+        return savedUser;
+    }
+
+      public void authenticate(User user) {
+
+        try{
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+
+            authenticationManager.authenticate(authenticationToken);
+        }
+        catch (BadCredentialsException exception)
+        {
+            throw new BadCredentialsException(" Invalid Username or Password  !!");
+        }
     }
 
 }
