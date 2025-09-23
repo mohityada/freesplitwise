@@ -25,6 +25,9 @@ public class User {
     private String password;
 
     @NotBlank
+    private String role;
+
+    @NotBlank
     @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits")
     private String mobile;
 
@@ -43,6 +46,9 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
     public String getMobile() { return mobile; }
     public void setMobile(String mobile) { this.mobile = mobile; }
